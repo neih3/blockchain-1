@@ -1,0 +1,117 @@
+.transfer-mobile-container {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f3f7fe 0%, #eaf1fb 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0 80px 0;
+}
+
+.transfer-card {
+    width: 100%;
+    max-width: 380px;
+    margin: 32px 0 0 0;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(60, 80, 180, 0.08);
+    background: #fff;
+    padding: 28px 20px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.transfer-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 18px;
+    color: #222;
+}
+
+.transfer-balance-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.transfer-balance-label {
+    color: #888;
+    font-size: 1rem;
+}
+
+.transfer-balance-value {
+    font-weight: 600;
+    color: #377dff;
+    font-size: 1.1rem;
+}
+
+.transfer-input-group {
+    display: flex;
+    align-items: center;
+    background: #f3f7fe;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+}
+
+.transfer-input {
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    flex: 1;
+    outline: none;
+}
+
+.transfer-token-select {
+    background: #eaf1fb;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    margin-left: 10px;
+    border: none;
+    color: #377dff;
+    font-weight: 500;
+}
+
+.transfer-address {
+    margin-bottom: 18px;
+}
+
+.transfer-estimate-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 0.98rem;
+    color: #888;
+}
+
+.transfer-btn {
+    width: 100%;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    padding: 13px 0;
+    background: #377dff;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+.transfer-btn:active,
+.transfer-btn:focus {
+    background: #2563d6;
+}
+
+.transfer-btn:disabled {
+    background: #b3cdfd;
+    color: #fff;
+}
+
+.transfer-placeholder {
+    color: #bbb;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    text-align: center;
+}

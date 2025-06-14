@@ -1,0 +1,59 @@
+{
+    "name": "client-management",
+    "version": "0.1.0",
+    "homepage": "https://hpacademy.xyz",
+    "private": true,
+    "dependencies": {
+        "@ant-design/icons": "^4.2.2",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-brands-svg-icons": "^5.15.3",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@fortawesome/react-fontawesome": "^0.1.14",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.5.0",
+        "@testing-library/user-event": "^7.2.1",
+        "antd": "^4.5.4",
+        "axios": "^0.19.2",
+        "bootstrap": "^4.5.2",
+        "date-fns": "^2.16.1",
+        "dateformat": "^3.0.3",
+        "lodash": "^4.17.21",
+        "moment": "^2.28.0",
+        "query-string": "^6.13.5",
+        "react": "^16.13.1",
+        "react-bootstrap": "^1.6.0",
+        "react-dev-utils": "^10.0.0",
+        "react-dom": "^16.13.1",
+        "react-icons": "^4.2.0",
+        "react-pro-sidebar": "^0.6.0",
+        "react-redux": "^7.2.1",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^3.3.0",
+        "redux": "^4.0.5",
+        "redux-logger": "^3.0.6",
+        "redux-promise-middleware": "^6.1.2",
+        "redux-thunk": "^2.3.0",
+        "sass": "^1.89.1"
+    },
+    "scripts": {
+        "start": "set NODE_OPTIONS=--openssl-legacy-provider&& set PORT=4200 && react-scripts start",
+        "build": "set NODE_OPTIONS=--openssl-legacy-provider&& react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

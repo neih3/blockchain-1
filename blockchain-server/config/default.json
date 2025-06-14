@@ -1,0 +1,22 @@
+{
+  "mongodb": {
+    "url": "mongodb+srv://hiencastoo:u6GcSUlTnAwVGObY@cluster0.t1cjzxd.mongodb.net/blockchain?retryWrites=true&w=majority&appName=Cluster0"
+  },
+  "auth": {
+    "secret": "secretKey",
+    "expiresIn": "100m",
+    "refreshTokenSz": 80
+  },
+  "emailTransportOptions": {
+    "host": "smtp.gmail.com",
+    "port": 465,
+    "secure": true,
+    "auth": {
+      "user": "hiencastoo@gmail.com",
+      "pass": "qkhv tala jbuf ddvu"
+    },
+    "tls": {
+      "rejectUnauthorized": false
+    }
+  }
+}

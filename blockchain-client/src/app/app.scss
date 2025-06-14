@@ -1,0 +1,100 @@
+// CSS Variables for theming
+:root {
+    --primary-color: #4c51bf;
+    --primary-hover: #553c9a;
+    --secondary-color: #f8f9fa;
+    --bg-color: #f5f6fa;
+    --card-bg: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b7280;
+    --text-placeholder: #9ca3af;
+    --border-color: #e5e7eb;
+    --input-bg: #ffffff;
+    --success-color: #16a34a;
+    --error-color: #dc2626;
+    --warning-color: #f59e0b;
+}
+
+// Base styles
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+// Common utility classes
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+
+.d-flex {
+    display: flex;
+}
+.d-block {
+    display: block;
+}
+.d-none {
+    display: none;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+.mt-2 {
+    margin-top: 0.5rem;
+}
+.mt-3 {
+    margin-top: 1rem;
+}
+.mt-4 {
+    margin-top: 1.5rem;
+}
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+.mb-3 {
+    margin-bottom: 1rem;
+}
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+.p-1 {
+    padding: 0.25rem;
+}
+.p-2 {
+    padding: 0.5rem;
+}
+.p-3 {
+    padding: 1rem;
+}
+.p-4 {
+    padding: 1.5rem;
+}
+.p-5 {
+    padding: 3rem;
+}
