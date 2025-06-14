@@ -17,7 +17,28 @@ require("express-async-errors");
 
 const initHttpServer = (myHttpPort) => {
   const app = express();
-  app.use(cors());
+
+  // CORS Configuration
+  const allowedOrigins = [
+    "http://localhost:3000", // For local dev (React default port)
+    "http://localhost:3001", // For local dev (if your client runs on this port)
+    "https://blockchain-1-bufk.vercel.app", // Your new deployed frontend URL
+  ];
+
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+          const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+          return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+      },
+      credentials: true, // Important if you need to send cookies or Authorization headers
+    })
+  );
   app.use(bodyParser.json());
   app.use(logger("dev"));
   // Connect to database
@@ -107,22 +128,29 @@ const initHttpServer = (myHttpPort) => {
     (req, res) => {
       const txPool = transactionPool.getTransactionPool();
       if (!txPool || txPool.length === 0) {
-        return res.status(400).send("Transaction pool is empty. Nothing to mine.");
+        return res
+          .status(400)
+          .send("Transaction pool is empty. Nothing to mine.");
       }
       const publicKey = wallet.getPublicFromPrivateKey(req.user.privateKey);
       // Lọc các transaction không liên quan đến user hiện tại
       const otherTxs = txPool.filter(
-        tx =>
-          !(tx.txIns && tx.txIns.some(txIn => txIn.address === publicKey)) &&
-          !(tx.txOuts && tx.txOuts.some(txOut => txOut.address === publicKey))
+        (tx) =>
+          !(tx.txIns && tx.txIns.some((txIn) => txIn.address === publicKey)) &&
+          !(tx.txOuts && tx.txOuts.some((txOut) => txOut.address === publicKey))
       );
       if (otherTxs.length === 0) {
-        return res.status(400).send("No transactions from other users to mine.");
+        return res
+          .status(400)
+          .send("No transactions from other users to mine.");
       }
       // Tạo coinbase transaction cho miner
       const transaction = require("./blockchain/transaction");
       const blockchainModule = require("./blockchain/blockchain");
-      const coinbaseTx = transaction.getCoinbaseTransaction(publicKey, blockchainModule.getLatestBlock().index + 1);
+      const coinbaseTx = transaction.getCoinbaseTransaction(
+        publicKey,
+        blockchainModule.getLatestBlock().index + 1
+      );
       const blockData = [coinbaseTx, ...otherTxs];
       const newBlock = blockchainModule.generateRawNextBlock(blockData);
       if (newBlock === null) {
@@ -131,7 +159,7 @@ const initHttpServer = (myHttpPort) => {
         res.send({
           block: newBlock,
           confirmedTransactions: otherTxs,
-          message: `Mined block #${newBlock.index} with ${otherTxs.length} transaction(s) confirmed.`
+          message: `Mined block #${newBlock.index} with ${otherTxs.length} transaction(s) confirmed.`,
         });
       }
     }
