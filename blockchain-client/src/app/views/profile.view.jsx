@@ -3,6 +3,7 @@ import { FiLogOut, FiKey, FiUpload, FiTrash2, FiEye, FiEyeOff } from 'react-icon
 import { useSelector, useDispatch } from 'react-redux';
 import actionCreators from '../redux/action-creators';
 import apiMethods from '../http-client/api-methods';
+import axios from 'axios';
 import '../views/profile.scss';
 
 const ProfileView = () => {
@@ -83,7 +84,7 @@ const ProfileView = () => {
 
     const handleUploadAvatar = async () => {
         if (!avatarFile) {
-            setError("Vui lòng chọn một file ảnh.");
+            setError('Vui lòng chọn một file ảnh.');
             return;
         }
         setIsUploading(true);
@@ -93,18 +94,40 @@ const ProfileView = () => {
             const formData = new FormData();
             formData.append('avatar', avatarFile);
             // Giả sử uploadAvatar được định nghĩa trong authorization.api.js
-            const response = await apiMethods.authorization.uploadAvatar(formData); 
+            // const response = await apiMethods.authorization.uploadAvatar(formData);
+            // const newAvatarUrl = response.data.data.avatarUrl;
+            // setProfile(prev => ({...prev, avatarUrl: newAvatarUrl, avatarFilename: response.data.data.avatarFilename }));
+            // if (newAvatarUrl) {
+            //      const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+            //      setAvatarPreview(`${baseUrl}${newAvatarUrl}`);
+            // }
+            // setSuccess("Tải ảnh đại diện thành công!");
+            // setAvatarFile(null);
+            // if(fileInputRef.current) fileInputRef.current.value = null;
+            const baseUrl =
+                process.env.REACT_APP_API_URL || 'https://blockchain-1-three.vercel.app';
+            const token = localStorage.getItem('token');
+            const response = await axios.post(`${baseUrl}/api/upload/avatar`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             const newAvatarUrl = response.data.data.avatarUrl;
-            setProfile(prev => ({...prev, avatarUrl: newAvatarUrl, avatarFilename: response.data.data.avatarFilename }));
+            setProfile((prev) => ({
+                ...prev,
+                avatarUrl: newAvatarUrl,
+                avatarFilename: response.data.data.avatarFilename,
+            }));
             if (newAvatarUrl) {
-                 const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-                 setAvatarPreview(`${baseUrl}${newAvatarUrl}`);
+                const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+                setAvatarPreview(`${baseUrl}${newAvatarUrl}`);
             }
-            setSuccess("Tải ảnh đại diện thành công!");
-            setAvatarFile(null); 
-            if(fileInputRef.current) fileInputRef.current.value = null; 
+            setSuccess('Tải ảnh đại diện thành công!');
+            setAvatarFile(null);
+            if (fileInputRef.current) fileInputRef.current.value = null;
         } catch (err) {
-            setError(err?.response?.data?.message || "Lỗi khi tải ảnh đại diện.");
+            setError(err?.response?.data?.message || 'Lỗi khi tải ảnh đại diện.');
         } finally {
             setIsUploading(false);
         }
@@ -113,20 +136,20 @@ const ProfileView = () => {
     const handleDeleteAvatar = async () => {
         // Kiểm tra xem có avatarFilename hoặc avatarUrl không để biết có ảnh để xóa không
         if (!profile?.avatarFilename && !profile?.avatarUrl) {
-            setError("Không có ảnh đại diện để xóa.");
+            setError('Không có ảnh đại diện để xóa.');
             return;
         }
-        if (window.confirm("Bạn có chắc muốn xóa ảnh đại diện hiện tại không?")) {
-            setIsUploading(true); 
+        if (window.confirm('Bạn có chắc muốn xóa ảnh đại diện hiện tại không?')) {
+            setIsUploading(true);
             setError('');
             setSuccess('');
             try {
                 await apiMethods.currentUser.deleteAvatar();
-                setProfile(prev => ({...prev, avatarUrl: null, avatarFilename: null }));
-                setAvatarPreview(require('../assets/images/avatar.png')); 
-                setSuccess("Xóa ảnh đại diện thành công!");
+                setProfile((prev) => ({ ...prev, avatarUrl: null, avatarFilename: null }));
+                setAvatarPreview(require('../assets/images/avatar.png'));
+                setSuccess('Xóa ảnh đại diện thành công!');
             } catch (err) {
-                setError(err?.response?.data?.message || "Lỗi khi xóa ảnh đại diện.");
+                setError(err?.response?.data?.message || 'Lỗi khi xóa ảnh đại diện.');
             } finally {
                 setIsUploading(false);
             }
@@ -223,25 +246,37 @@ const ProfileView = () => {
                         src={avatarPreview || require('../assets/images/avatar.png')} // Fallback nếu avatarPreview null
                         alt="avatar"
                     />
-                    <input 
-                        type="file" 
-                        accept="image/*" 
-                        onChange={handleFileChange} 
-                        style={{display: 'none'}} 
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
                         ref={fileInputRef}
                     />
                     <div className="avatar-actions">
-                        <button className="btn-icon" onClick={() => fileInputRef.current && fileInputRef.current.click()} disabled={isUploading}>
+                        <button
+                            className="btn-icon"
+                            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                            disabled={isUploading}
+                        >
                             <FiUpload /> {avatarFile ? 'Đổi ảnh' : 'Chọn ảnh'}
                         </button>
                         {avatarFile && (
-                            <button className="btn-icon btn-green" onClick={handleUploadAvatar} disabled={isUploading}>
+                            <button
+                                className="btn-icon btn-green"
+                                onClick={handleUploadAvatar}
+                                disabled={isUploading}
+                            >
                                 {isUploading ? 'Đang xử lý...' : 'Tải lên'}
                             </button>
                         )}
                         {/* Hiển thị nút xóa chỉ khi có avatarUrl hoặc avatarFilename trong profile */}
                         {(profile?.avatarUrl || profile?.avatarFilename) && !avatarFile && (
-                             <button className="btn-icon btn-red" onClick={handleDeleteAvatar} disabled={isUploading}>
+                            <button
+                                className="btn-icon btn-red"
+                                onClick={handleDeleteAvatar}
+                                disabled={isUploading}
+                            >
                                 <FiTrash2 /> {isUploading ? 'Đang xử lý...' : 'Xóa ảnh'}
                             </button>
                         )}
